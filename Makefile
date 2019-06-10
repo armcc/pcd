@@ -66,7 +66,7 @@ help:
 	  @echo "- make distclean - Cleans also all configuration files."
 
 conf:
-	@$(MAKE) -C $(PCD_KCFG_DIR) -s 2> /dev/null
+	@$(MAKE) -C $(PCD_KCFG_DIR) -s
 
 pcd_title:
 	@echo "*--------------------------------------------------"
