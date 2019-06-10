@@ -29,6 +29,7 @@ MCONF := $(PCD_KCFG_DIR)/mconf
 CONF := $(PCD_KCFG_DIR)/conf
 
 export CFLAGS += -I$(PCD_CFG_DIR)
+export HOST_CFLAGS += -I$(PCD_CFG_DIR)
 
 # Optimization selection
 ifdef PCD_OPTIMIZE_FOR_SIZE

@@ -8,6 +8,9 @@
 #
 # 2005-12-11 Petr Baudis <pasky@suse.cz>
 
+HOST_CC=gcc
+HOST_AR=ar
+
 HOST_EXTRACFLAGS := -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer -DLOCALE 
 ifeq ($(shell uname),SunOS)
 HOST_LOADLIBES   := -lcurses
@@ -39,13 +42,13 @@ lxdialog-objs := checklist.o menubox.o textbox.o yesno.o inputbox.o \
 		util.o msgbox.o lxdialog.o
 
 all: $(lxdialog-objs)
-	$(CC) $^ -o $(hostprogs-y) -lncurses
+	$(HOST_CC) $^ -o $(hostprogs-y) -lncurses
 
 liblxdialog.a: $(liblxdialog-objs)
-	$(AR) rs $@ $^ 
+	$(HOST_AR) rs $@ $^ 
 
 %.o: %.c
-	$(CC) $(HOST_EXTRACFLAGS) -fPIC -c $< 
+	$(HOST_CC) $(HOST_EXTRACFLAGS) -fPIC -c $< 
 
 clean:
 	rm -f $(hostprogs-y) $(liblxdialog-objs) $(lxdialog-objs) liblxdialog.a
@@ -53,7 +56,7 @@ clean:
 .PHONY: $(obj)/ncurses
 $(obj)/ncurses:
 	@echo "main() {}" > lxtemp.c
-	@if $(HOSTCC) lxtemp.c  $(HOST_LOADLIBES); then \
+	@if $(HOST_CC) lxtemp.c  $(HOST_LOADLIBES); then \
 		rm -f lxtemp.c a.out; \
 	else \
 		rm -f lxtemp.c; \

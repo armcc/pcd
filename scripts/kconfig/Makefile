@@ -1,10 +1,10 @@
 VERSION=1.4
-CC=gcc
-CXX=g++
-CFLAGS=-O2 -Wall -g -fPIC
-CXXFLAGS=$(CFLAGS) -I$(QTDIR)/include
-LDFLAGS=
-LXXFLAGS=$(LDFLAGS) -L$(QTDIR)/lib -Wl,-rpath,$(QTDIR)/lib
+HOST_CC=gcc
+HOST_CXX=g++
+HOST_CFLAGS=-O2 -Wall -g -fPIC
+HOST_CXXFLAGS=$(HOST_CFLAGS) -I$(QTDIR)/include
+HOST_LDFLAGS=
+HOST_LXXFLAGS=$(HOST_LDFLAGS) -L$(QTDIR)/lib -Wl,-rpath,$(QTDIR)/lib
 LEX=flex
 LFLAGS=-L
 YACC=bison
@@ -17,7 +17,7 @@ MOC=$(wildcard $(QTDIR)/bin/moc)
 GTKCFLAGS=`pkg-config gtk+-2.0 gmodule-2.0 libglade-2.0 --cflags`
 GTKLDFLAGS=`pkg-config gtk+-2.0 gmodule-2.0 libglade-2.0 --libs`
 
-CFLAGS += -DPRODUCT_NAME=\"$(PRODUCT_NAME)\" -DPRODUCT=\"$(PRODUCT)\"
+HOST_CFLAGS += -DPRODUCT_NAME=\"$(PRODUCT_NAME)\" -DPRODUCT=\"$(PRODUCT)\"
 
 parse_SRC=zconf.y
 conf_SRC=conf.c $(parse_SRC)
@@ -34,7 +34,7 @@ INSTGEN=lex.zconf.c zconf.tab.c
 ## DEBUG set to avoid dlopen on libkconfig.so
 DEBUG=1
 ifdef DEBUG
-CFLAGS+=-DLKC_DIRECT_LINK
+HOST_CFLAGS+=-DLKC_DIRECT_LINK
 qconf_SRC+=$(parse_SRC)
 else
 qconf_SRC+=kconfig_load.c
@@ -94,13 +94,13 @@ qconf.o: qconf.cc qconf.moc images.c $(lkc_deps)
 gconf.o: gconf.c $(lkc_deps)
 
 mconf: $(mconf_OBJ) lxdialog/lxdialog
-	$(CC) $(LDFLAGS) $(mconf_OBJ) -o $@ -lncurses
+	$(HOST_CC) $(HOST_LDFLAGS) $(mconf_OBJ) -o $@ -lncurses
 
 lxdialog/lxdialog:
 	$(MAKE) -C lxdialog
 
 conf: $(conf_OBJ)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(HOST_CC) $(HOST_LDFLAGS) $^ -o $@
 
 ifeq ($(MOC),)
 qconf:
@@ -111,19 +111,19 @@ qconf:
 qbuild:
 else
 qconf: $(qconf_OBJ)
-	$(CXX) $(LXXFLAGS) $^ -lqt-mt -o $@
+	$(HOST_CXX) $(HOST_LXXFLAGS) $^ -lqt-mt -o $@
 qbuild: qconf
 	ln -sf $^ qbuild
 endif
 
 gconf.o: gconf.c
-	$(CC) $(CFLAGS) $(GTKCFLAGS) -c $< -o $@
+	$(HOST_CC) $(HOST_CFLAGS) $(GTKCFLAGS) -c $< -o $@
 
 gconf: $(gconf_OBJ)
-	$(CC) $(LDFLAGS) $(GTKLDFLAGS) $^ -o $@
+	$(HOST_CC) $(HOST_LDFLAGS) $(GTKLDFLAGS) $^ -o $@
 
 libkconfig.so: $(parse_OBJ)
-	$(CC) -shared $^ -o $@
+	$(HOST_CC) -shared $^ -o $@
 
 lkc_defs.h: lkc_proto.h
 	sed < $< > $@ 's/P(\([^,]*\),.*/#define \1 (\*\1_p)/'
@@ -152,10 +152,10 @@ lex.%.c: %.l
 	$(QTDIR)/bin/moc -i $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(HOST_CC) $(HOST_CFLAGS) -c $< -o $@
 
 %.o: %.cc
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(HOST_CXX) $(HOST_CXXFLAGS) -c $< -o $@
 
 ifdef KERNELSRC
 install: $(INSTGEN)
@@ -200,7 +200,7 @@ python: .python .python/kconfig.py .python/_kconfig.so
 	swig -python -o .python/kconfig_wrap.c kconfig.i
 
 .python/_kconfig.so: .python/kconfig_wrap.c
-	cd .python; $(CC) $(CFLAGS) -shared kconfig_wrap.c -o _kconfig.so -I.. $(PYTHON_INCLUDE)
+	cd .python; $(HOST_CC) $(HOST_CFLAGS) -shared kconfig_wrap.c -o _kconfig.so -I.. $(PYTHON_INCLUDE)
 
 
 .PHONY: all tgz clean ruby python

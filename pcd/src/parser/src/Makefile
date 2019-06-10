@@ -20,12 +20,12 @@
 
 -include $(PCD_ROOT)/.config
 
-CC = gcc
-CFLAGS += -MMD -O2 -Wall -fomit-frame-pointer -DPCD_HOST_BUILD
-LDFLAGS =
+HOST_CC = gcc
+HOST_CFLAGS += -MMD -O2 -Wall -fomit-frame-pointer -DPCD_HOST_BUILD
+HOST_LDFLAGS =
 
 # includes
-CFLAGS += -I$(PCD_ROOT)/pcd/src/parser/include -I$(PCD_ROOT)/pcd/include
+HOST_CFLAGS += -I$(PCD_ROOT)/pcd/src/parser/include -I$(PCD_ROOT)/pcd/include
 
 obj-y := $(patsubst %.c,%.o,$(shell ls *.c 2> /dev/null))
 TARGET = pcdparser
@@ -33,8 +33,8 @@ TARGET = pcdparser
 all: $(TARGET)
 
 $(TARGET): $(obj-y)
-	@echo "  LINK	 	$@"
-	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
+	@echo "  HOST LINK	$@"
+	$(HOST_CC) $(HOST_CFLAGS) $(obj-y) -o $@ $(HOST_LDFLAGS) -Wl,-Map,$@.map
 
 install: $(TARGET)
 	install $(TARGET) $(PCD_BIN)/host
@@ -48,8 +48,8 @@ clean:
 	rm -f $(CONFIG_PCD_INSTALL_DIR_HOST)/$(TARGET)
 
 %.o: %.c
-	@echo "  CC [C] 	$@"
-	$(CC) $(CFLAGS) -c $(CURDIR)/$< -o $@
+	@echo "  HOST_CC [C]	$@"
+	$(HOST_CC) $(HOST_CFLAGS) -c $(CURDIR)/$< -o $@
 
 -include $(obj-y:.o=.d)
 
