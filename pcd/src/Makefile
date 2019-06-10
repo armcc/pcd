@@ -45,7 +45,7 @@ ifdef CONFIG_PCD_INSTALL_DIR_PREFIX
 	@install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
 endif	
 	
-install_internal:	
+install_internal: $(TARGET)
 	@mkdir -p $(PCD_BIN)/target/usr/sbin
 	@install $(TARGET) $(PCD_BIN)/target/usr/sbin
 

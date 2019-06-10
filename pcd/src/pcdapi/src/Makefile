@@ -29,41 +29,37 @@ LDFLAGS += -shared
 CFLAGS += -I$(PCD_ROOT)/pcd/include -I$(PCD_ROOT)/pcd/src/pcdapi/include -I$(PCD_ROOT)/ipc/include
 
 obj-y := $(patsubst %.c,%.o,$(shell ls *.c 2> /dev/null))
-TARGET = libpcd
+ifdef CONFIG_PCD_USE_STATIC_LIBS
+TARGET = libpcd.a
+else
+TARGET = libpcd.so
+endif
 
 all: $(TARGET) install
 
 $(TARGET): $(obj-y)
 	@echo "  LINK	 	$@"
 ifdef CONFIG_PCD_USE_STATIC_LIBS
-	@$(AR) rcs $@.a $(obj-y)
+	@$(AR) rcs $@ $(obj-y)
 else
-	@$(CC) $(CFLAGS) $(obj-y) -o $@.so $(LDFLAGS) -Wl,-Map,$@.map
+	@$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$(@:.so=.map)
 endif
 	@install -p $(PCD_ROOT)/pcd/src/pcdapi/include/*.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
 ifdef CONFIG_PCD_INSTALL_DIR_PREFIX
 	@mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
-ifdef CONFIG_PCD_USE_STATIC_LIBS
-	@install $(TARGET).a $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
-else
-	@install $(TARGET).so $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
-endif
+	@install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
 endif
 
-install_internal:
+install_internal: $(TARGET)
 	@mkdir -p $(PCD_BIN)/target/lib
-ifdef CONFIG_PCD_USE_STATIC_LIBS
-	@install $(TARGET).a $(PCD_BIN)/target/lib
-else
-	@install $(TARGET).so $(PCD_BIN)/target/lib
-endif
+	@install $(TARGET) $(PCD_BIN)/target/lib
 
 clean:
-	@rm -f $(TARGET).so $(TARGET).a $(obj-y) $(obj-y:.o=.d) $(TARGET).map
-	@rm -f $(PCD_BIN)/target/lib/$(TARGET).*
-	@rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib/$(TARGET).*
+	@rm -f $(TARGET) $(TARGET:.so=.map) $(obj-y) $(obj-y:.o=.d)
+	@rm -f $(PCD_BIN)/target/lib/$(TARGET)
+	@rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib/$(TARGET)
 
 %.o: %.c
 	@echo "  CC [C] 	$@"
