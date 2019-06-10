@@ -37,8 +37,10 @@ $(TARGET): $(obj-y)
 	$(HOST_CC) $(HOST_CFLAGS) $(obj-y) -o $@ $(HOST_LDFLAGS) -Wl,-Map,$@.map
 
 install: $(TARGET)
+	mkdir -p $(PCD_BIN)/host
 	install -m755 $(TARGET) $(PCD_BIN)/host
 ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),"")
+	mkdir -p $(CONFIG_PCD_INSTALL_DIR_HOST)
 	install -m755 $(TARGET) $(CONFIG_PCD_INSTALL_DIR_HOST)
 endif	
 
