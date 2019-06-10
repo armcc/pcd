@@ -159,7 +159,7 @@ pcd: pcd_title check_config check_permissions generate_version
 	@$(MAKE) -C ./pcd/src/pcdapi/src
 	@$(MAKE) -C ./pcd/src
 	@$(MAKE) -C ./pcd/src/parser/src
-	@install -p $(PCD_ROOT)/scripts/configs/pcd_autoconf.h $(PCD_ROOT)/include
+	@install -m644 -p $(PCD_ROOT)/scripts/configs/pcd_autoconf.h $(PCD_ROOT)/include
 	@echo PCD build completed. 
 
 install: pcd_title check_permissions
@@ -170,7 +170,7 @@ install: pcd_title check_permissions
 	@$(MAKE) -C ./pcd/src/parser/src install
 ifneq ($(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX),"")
 	@if [ "$(PCD_ROOT)/include" != $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ]; then \
-		install -p $(PCD_ROOT)/include/*.h $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ;\
+		install -m644 -p $(PCD_ROOT)/include/*.h $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ;\
 	fi
 endif
 

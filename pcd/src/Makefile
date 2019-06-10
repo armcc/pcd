@@ -37,17 +37,17 @@ all: $(TARGET) install
 $(TARGET): $(obj-y)
 	@echo "  LINK	 	$@"
 	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
-	install -p $(PCD_ROOT)/pcd/include/pcd.h $(PCD_ROOT)/pcd/include/ruleid.h $(PCD_ROOT)/include
+	install -m644 -p $(PCD_ROOT)/pcd/include/pcd.h $(PCD_ROOT)/pcd/include/ruleid.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
 ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
-	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
+	install -m755 $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
 endif	
 	
 install_internal: $(TARGET)
 	mkdir -p $(PCD_BIN)/target/usr/sbin
-	install $(TARGET) $(PCD_BIN)/target/usr/sbin
+	install -m755 $(TARGET) $(PCD_BIN)/target/usr/sbin
 
 clean:
 	rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map

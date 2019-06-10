@@ -44,17 +44,17 @@ ifdef CONFIG_PCD_USE_STATIC_LIBS
 else
 	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$(@:.so=.map)
 endif
-	install -p $(PCD_ROOT)/ipc/include/*.h $(PCD_ROOT)/include
+	install -m644 -p $(PCD_ROOT)/ipc/include/*.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
 ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
-	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
+	install -m644 $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
 endif
 
 install_internal: $(TARGET)
 	mkdir -p $(PCD_BIN)/target/lib
-	install $(TARGET) $(PCD_BIN)/target/lib
+	install -m644 $(TARGET) $(PCD_BIN)/target/lib
 
 clean:
 	rm -f $(TARGET) $(TARGET:.so=.map) $(obj-y) $(obj-y:.o=.d)
