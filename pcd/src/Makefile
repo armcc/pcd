@@ -36,27 +36,27 @@ all: $(TARGET) install
 
 $(TARGET): $(obj-y)
 	@echo "  LINK	 	$@"
-	@$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
-	@install -p $(PCD_ROOT)/pcd/include/pcd.h $(PCD_ROOT)/pcd/include/ruleid.h $(PCD_ROOT)/include
+	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
+	install -p $(PCD_ROOT)/pcd/include/pcd.h $(PCD_ROOT)/pcd/include/ruleid.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
 ifdef CONFIG_PCD_INSTALL_DIR_PREFIX
-	@mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
-	@install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
+	mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
+	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
 endif	
 	
 install_internal: $(TARGET)
-	@mkdir -p $(PCD_BIN)/target/usr/sbin
-	@install $(TARGET) $(PCD_BIN)/target/usr/sbin
+	mkdir -p $(PCD_BIN)/target/usr/sbin
+	install $(TARGET) $(PCD_BIN)/target/usr/sbin
 
 clean:
-	@rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
-	@rm -f $(PCD_BIN)/target/usr/sbin/$(TARGET)
-	@rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin/$(TARGET)
+	rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
+	rm -f $(PCD_BIN)/target/usr/sbin/$(TARGET)
+	rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin/$(TARGET)
 
 %.o: %.c
 	@echo "  CC [C] 	$@"
-	@$(CC) $(CFLAGS) -c $(CURDIR)/$< -o $@
+	$(CC) $(CFLAGS) -c $(CURDIR)/$< -o $@
 
 -include $(obj-y:.o=.d)
 

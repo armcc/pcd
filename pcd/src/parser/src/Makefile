@@ -34,22 +34,22 @@ all: $(TARGET)
 
 $(TARGET): $(obj-y)
 	@echo "  LINK	 	$@"
-	@$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
+	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$@.map
 
 install: $(TARGET)
-	@install $(TARGET) $(PCD_BIN)/host
+	install $(TARGET) $(PCD_BIN)/host
 ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),)
-	@install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_HOST)
+	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_HOST)
 endif	
 
 clean:
-	@rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
-	@rm -f $(PCD_ROOT)/bin/host/$(TARGET)
-	@rm -f $(CONFIG_PCD_INSTALL_DIR_HOST)/$(TARGET)
+	rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
+	rm -f $(PCD_ROOT)/bin/host/$(TARGET)
+	rm -f $(CONFIG_PCD_INSTALL_DIR_HOST)/$(TARGET)
 
 %.o: %.c
 	@echo "  CC [C] 	$@"
-	@$(CC) $(CFLAGS) -c $(CURDIR)/$< -o $@
+	$(CC) $(CFLAGS) -c $(CURDIR)/$< -o $@
 
 -include $(obj-y:.o=.d)
 
