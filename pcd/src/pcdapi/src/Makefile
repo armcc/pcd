@@ -20,8 +20,8 @@
 
 -include $(PCD_ROOT)/.config
 
-CC := $(CONFIG_PCD_CROSS_COMPILER_PREFIX)gcc
-AR := $(CONFIG_PCD_CROSS_COMPILER_PREFIX)ar
+CC := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))gcc
+AR := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))ar
 CFLAGS += -MMD -Wall -fomit-frame-pointer -fPIC -g
 LDFLAGS += -shared
 
@@ -47,7 +47,7 @@ endif
 	install -p $(PCD_ROOT)/pcd/src/pcdapi/include/*.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
-ifdef CONFIG_PCD_INSTALL_DIR_PREFIX
+ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
 	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib
 endif
@@ -59,7 +59,9 @@ install_internal: $(TARGET)
 clean:
 	rm -f $(TARGET) $(TARGET:.so=.map) $(obj-y) $(obj-y:.o=.d)
 	rm -f $(PCD_BIN)/target/lib/$(TARGET)
+ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/lib/$(TARGET)
+endif
 
 %.o: %.c
 	@echo "  CC [C] 	$@"

@@ -20,7 +20,7 @@
 
 -include $(PCD_ROOT)/.config
 
-CC := $(CONFIG_PCD_CROSS_COMPILER_PREFIX)gcc
+CC := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))gcc
 CFLAGS += -MMD -Wall -fomit-frame-pointer -g
 
 # includes
@@ -40,7 +40,7 @@ $(TARGET): $(obj-y)
 	install -p $(PCD_ROOT)/pcd/include/pcd.h $(PCD_ROOT)/pcd/include/ruleid.h $(PCD_ROOT)/include
 
 install: $(TARGET) install_internal
-ifdef CONFIG_PCD_INSTALL_DIR_PREFIX
+ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
 	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin
 endif	
@@ -52,7 +52,9 @@ install_internal: $(TARGET)
 clean:
 	rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
 	rm -f $(PCD_BIN)/target/usr/sbin/$(TARGET)
+ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
 	rm -f $(CONFIG_PCD_INSTALL_DIR_PREFIX)/usr/sbin/$(TARGET)
+endif
 
 %.o: %.c
 	@echo "  CC [C] 	$@"

@@ -128,13 +128,21 @@ menuconfig: pcd_title conf
 	@echo Please make sure that you have write permissions to installation directories.
 
 check_permissions:
-	@echo Checking write permission: $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)
-	@mkdir -p $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) && touch $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)/pcd.tmp 2> /dev/null && rm $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)/pcd.tmp
-	@echo Checking write permission: $(CONFIG_PCD_INSTALL_DIR_HOST)
+ifneq ($(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX),"")
+	@if [ "$(PCD_ROOT)/include" != $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ]; then \
+		echo Checking write permission: $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) [CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX]; \
+		mkdir -p $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) && touch $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)/pcd.tmp 2> /dev/null && rm $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)/pcd.tmp; \
+	fi
+endif
+ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),"")
+	@echo Checking write permission: $(CONFIG_PCD_INSTALL_DIR_HOST) [CONFIG_PCD_INSTALL_DIR_HOST]
 	@mkdir -p $(CONFIG_PCD_INSTALL_DIR_HOST) && touch $(CONFIG_PCD_INSTALL_DIR_HOST)/pcd.tmp 2> /dev/null && rm $(CONFIG_PCD_INSTALL_DIR_HOST)/pcd.tmp
-	@echo Checking write permission: $(CONFIG_PCD_INSTALL_DIR_PREFIX)
+endif
+ifneq ($(CONFIG_PCD_INSTALL_DIR_PREFIX),"")
+	@echo Checking write permission: $(CONFIG_PCD_INSTALL_DIR_PREFIX) [CONFIG_PCD_INSTALL_DIR_PREFIX]
 	@mkdir -p $(CONFIG_PCD_INSTALL_DIR_PREFIX) && touch $(CONFIG_PCD_INSTALL_DIR_PREFIX)/pcd.tmp 2> /dev/null && rm $(CONFIG_PCD_INSTALL_DIR_PREFIX)/pcd.tmp
-	@echo Checking write permission: $(PCD_ROOT)/include
+endif
+	@echo Checking write permission: $(PCD_ROOT)/include [PCD_ROOT/include]
 	@mkdir -p $(PCD_ROOT)/include && touch $(PCD_ROOT)/include/pcd.tmp 2> /dev/null && rm $(PCD_ROOT)/include/pcd.tmp
 
 check_config:
@@ -160,9 +168,11 @@ install: pcd_title check_permissions
 	@$(MAKE) -C ./pcd/src/pcdapi/src install
 	@$(MAKE) -C ./pcd/src install	
 	@$(MAKE) -C ./pcd/src/parser/src install
-	@if [ "$(PCD_ROOT)/include" != "$(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX)" ]; then \
+ifneq ($(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX),"")
+	@if [ "$(PCD_ROOT)/include" != $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ]; then \
 		install -p $(PCD_ROOT)/include/*.h $(CONFIG_PCD_INSTALL_HEADERS_DIR_PREFIX) ;\
 	fi
+endif
 
 clean:
 	@$(MAKE) -C ./pcd/src clean -s

@@ -38,14 +38,16 @@ $(TARGET): $(obj-y)
 
 install: $(TARGET)
 	install $(TARGET) $(PCD_BIN)/host
-ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),)
+ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),"")
 	install $(TARGET) $(CONFIG_PCD_INSTALL_DIR_HOST)
 endif	
 
 clean:
 	rm -f $(TARGET) $(obj-y) $(obj-y:.o=.d) $(TARGET).map
 	rm -f $(PCD_ROOT)/bin/host/$(TARGET)
+ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),"")
 	rm -f $(CONFIG_PCD_INSTALL_DIR_HOST)/$(TARGET)
+endif
 
 %.o: %.c
 	@echo "  HOST_CC [C]	$@"
