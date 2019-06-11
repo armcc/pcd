@@ -26,7 +26,7 @@ CFLAGS += -MMD -Wall -fomit-frame-pointer -fPIC -g
 LDFLAGS += -shared
 
 # includes
-CFLAGS += -I$(PCD_ROOT)/ipc/include
+CFLAGS += -I$(PCD_ROOT)/ipc/include -I$(PCD_ROOT)/pcd/include
 
 obj-y := $(patsubst %.c,%.o,$(shell ls *.c 2> /dev/null))
 ifdef CONFIG_PCD_USE_STATIC_LIBS
