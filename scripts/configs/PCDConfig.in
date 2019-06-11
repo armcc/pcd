@@ -122,13 +122,6 @@ config PCD_MAX_PARAM_SIZE
 		help 
 Set the maximum size of the buffer that holds the parameters of a process. This buffer holds the parameters which are either parsed from the rule, or passed by the start process API.
 
-config PCD_MAX_LOG_SIZE 
-		int "Maximum size of a log message" 
-		range 1 256 
-		default 256 
-		help 
-Set the maximum size of a log message.
-
 config PCD_PRIORITY 
 		int "PCD priority in the system" 
 		range 1 99

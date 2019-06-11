@@ -53,6 +53,8 @@
 extern bool_t verboseOutput;
 extern bool_t debugMode;
 
+#define PCD_MAX_LOG_SIZE 256
+
 /*! \def PCD_PRINT_PREFIX
  *  \brief Holds the prefix for printouts
  */
@@ -74,7 +76,7 @@ do { if( verboseOutput ) fprintf( stdout, "%s%s"_format "%s", PCD_PRINT_PREFIX, 
  *  \brief Print a message to standard error
  */
 #define PCD_PRINTF_STDERR( _format, _args... )        \
-do { char tmpLogBuffer[ CONFIG_PCD_MAX_LOG_SIZE ]; \
+do { char tmpLogBuffer[ PCD_MAX_LOG_SIZE ]; \
     snprintf( tmpLogBuffer, sizeof(tmpLogBuffer), "%s%s"_format "%s", PCD_PRINT_PREFIX, "Error: ", ##_args, ".\n" ); \
 	if( verboseOutput ) fprintf( stderr, "%s", tmpLogBuffer ); \
     PCD_errlog_log( tmpLogBuffer, True ); \
