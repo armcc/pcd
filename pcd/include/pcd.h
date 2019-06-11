@@ -45,7 +45,10 @@
 /**************************************************************************/
 #include "system_types.h"
 #include "errlog.h"
+
+#if !defined (WITHOUT_PCD_AUTOCONF)
 #include "pcd_autoconf.h"
+#endif
 
 /**************************************************************************/
 /*      INTERFACE TYPES and STRUCT Definitions                            */

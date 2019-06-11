@@ -20,8 +20,10 @@
 
 -include $(PCD_ROOT)/.config
 
+CONFIG_PCD_INSTALL_DIR_HOST ?= ""
+
 HOST_CC = gcc
-HOST_CFLAGS += -MMD -O2 -Wall -fomit-frame-pointer -DPCD_HOST_BUILD
+HOST_CFLAGS += -MMD -O2 -Wall -fomit-frame-pointer -DPCD_HOST_BUILD -DWITHOUT_PCD_AUTOCONF
 HOST_LDFLAGS =
 
 # includes

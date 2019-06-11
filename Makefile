@@ -146,6 +146,11 @@ pcd: pcd_title check_config check_permissions generate_version
 	@install -m644 -p $(PCD_ROOT)/scripts/configs/pcd_autoconf.h $(PCD_ROOT)/include
 	@echo PCD build completed. 
 
+pcdparser:
+	@echo "Building pcdparser..."
+	@$(MAKE) -C ./pcd/src/parser/src install
+	@echo pcdparser build completed. 
+
 install: pcd_title check_permissions
 	@echo "Installing PCD..."
 	@$(MAKE) -C ./ipc/src install
