@@ -53,8 +53,6 @@
 /*      LOCAL DEFINITIONS AND VARIABLES                                   */
 /**************************************************************************/
 
-extern int32_t errno;
-
 static timerObj_t *timerObjHead = NULL;
 static bool_t timerEnabled = False;
 
@@ -109,8 +107,6 @@ condCheckFunc endCondFuncs[] =
 };
 
 #undef PCD_END_COND_KEYWORD
-
-extern int32_t errno;
 
 /**************************************************************************/
 /*      IMPLEMENTATION                                                    */
