@@ -24,7 +24,6 @@ PCD_KCFG_DIR := $(PCD_ROOT)/scripts/kconfig
 
 PCD_CONFIG_IN := $(PCD_CFG_DIR)/PCDConfig.in
 PCD_DEF_CFG_FILE := $(PCD_CFG_DIR)/pcd_defconfig
-QCONF := $(PCD_KCFG_DIR)/qconf
 MCONF := $(PCD_KCFG_DIR)/mconf
 CONF := $(PCD_KCFG_DIR)/conf
 
@@ -56,7 +55,6 @@ help:
 	  @echo "Configuration commands:"
 	  @echo "- make defconfig - Configure default PCD settings."
 	  @echo "- make menuconfig - Configure the PCD settings in a textual menu."
-	  @echo "- make xconfig - Configure the PCD settings in a graphical menu (requires qt library)."
 	  @echo "- make oldconfig - Configure the PCD using existing settings in .config file."
 	  @echo " "
 	  @echo "Compilation commands:"
@@ -91,20 +89,6 @@ oldconfig: pcd_title conf
 	@if [ ! -f $(PCD_ROOT)/.config ]; then \
 	  cp $(PCD_DEF_CFG_FILE) $(PCD_ROOT)/.config ;\
 	fi
-	@$(CONF) -s $(PCD_CONFIG_IN)
-	@if [ -f $(PCD_ROOT)/autoconf.h ]; then \
-    	mv auto.conf $(PCD_CFG_DIR) ;\
-		mv autoconf.h $(PCD_CFG_DIR)/pcd_autoconf.h ;\
-	fi
-	@echo PCD Configuration completed.
-	@echo Please make sure that you have write permissions to installation directories.
-
-xconfig: pcd_title conf
-	@echo Configuring PCD...
-	@if [ ! -f $(PCD_ROOT)/.config ]; then \
-	  cp $(PCD_DEF_CFG_FILE) $(PCD_ROOT)/.config ;\
-	fi
-	@$(QCONF) $(PCD_CONFIG_IN) $(PCD_ROOT)/.config
 	@$(CONF) -s $(PCD_CONFIG_IN)
 	@if [ -f $(PCD_ROOT)/autoconf.h ]; then \
     	mv auto.conf $(PCD_CFG_DIR) ;\
@@ -188,4 +172,4 @@ distclean: clean
 	@rm -f $(PCD_KCFG_DIR)/.config $(PCD_KCFG_DIR)/.config.old $(PCD_KCFG_DIR)/pcd_autoconf.h $(PCD_KCFG_DIR)/auto.conf
 	@rm -rf $(PCD_ROOT)/include $(PCD_ROOT)/bin
 
-.PHONY: all install check_permissions check_config clean distclean help conf pcd_title menuconfig xconfig defconfig oldconfig
+.PHONY: all install check_permissions check_config clean distclean help conf pcd_title menuconfig defconfig oldconfig
