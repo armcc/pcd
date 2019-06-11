@@ -75,7 +75,7 @@ do { if( verboseOutput ) fprintf( stdout, "%s%s"_format "%s", PCD_PRINT_PREFIX, 
  */
 #define PCD_PRINTF_STDERR( _format, _args... )        \
 do { char tmpLogBuffer[ CONFIG_PCD_MAX_LOG_SIZE ]; \
-    snprintf( tmpLogBuffer, CONFIG_PCD_MAX_LOG_SIZE - 1, "%s%s"_format "%s", PCD_PRINT_PREFIX, "Error: ", ##_args, ".\n" ); \
+    snprintf( tmpLogBuffer, sizeof(tmpLogBuffer), "%s%s"_format "%s", PCD_PRINT_PREFIX, "Error: ", ##_args, ".\n" ); \
 	if( verboseOutput ) fprintf( stderr, "%s", tmpLogBuffer ); \
     PCD_errlog_log( tmpLogBuffer, True ); \
 } while( 0 )
