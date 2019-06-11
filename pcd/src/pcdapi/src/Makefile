@@ -42,7 +42,7 @@ $(TARGET): $(obj-y)
 ifdef CONFIG_PCD_USE_STATIC_LIBS
 	$(AR) rcs $@ $(obj-y)
 else
-	$(CC) $(CFLAGS) $(obj-y) -o $@ $(LDFLAGS) -Wl,-Map,$(@:.so=.map)
+	$(CC) $(CFLAGS) $(obj-y) -o $@ -Wl,-soname,$@ $(LDFLAGS) -Wl,-Map,$(@:.so=.map)
 endif
 	install -m644 -p $(PCD_ROOT)/pcd/src/pcdapi/include/*.h $(PCD_ROOT)/include
 
