@@ -290,7 +290,7 @@ static procObj_t *PCD_process_spawn(procObj_t *proc)
     {
         char *token;
         char vars[ CONFIG_PCD_MAX_PARAM_SIZE ];
-        u_int32_t varsIdx = 0;
+        uint32_t varsIdx = 0;
 
         /* Setup executable name */
         args[0] = args[1] = rule->command;
@@ -340,7 +340,7 @@ static procObj_t *PCD_process_spawn(procObj_t *proc)
 
                 	if( p_var )
                 	{
-                    	u_int32_t val = p_var - ( ptr + 2 );
+                    	uint32_t val = p_var - ( ptr + 2 );
 
                 		memset( var_name, 0, sizeof( var_name ) );
                     	if( val >= sizeof( var_name ) )

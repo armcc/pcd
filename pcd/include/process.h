@@ -87,7 +87,7 @@ typedef struct procObj_t
     procState_e     state;
     procExit_e      retstat;
     int32_t           retcode;
-    u_int32_t          tm;
+    uint32_t          tm;
     bool_t            signaled;
     void            *cookie;
 

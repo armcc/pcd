@@ -54,7 +54,7 @@
  */
 #define PCD_TIMER_TICK_DEFAULT       200
 
-extern u_int32_t PCD_TIMER_TICK;       /* PCD Timer tick in ms */
+extern uint32_t PCD_TIMER_TICK;       /* PCD Timer tick in ms */
 
 /*! \struct timerObj_t
  *  \brief Timer object structure
@@ -65,7 +65,7 @@ typedef struct timerObj_t
     condCheckFunc       startCondCheckFunc;
     condCheckFunc       endCondCheckFunc;
     failActionFunc      failureActionFunc;
-    u_int32_t              timeout;
+    uint32_t              timeout;
 
     struct timerObj_t   *prev;
     struct timerObj_t   *next;

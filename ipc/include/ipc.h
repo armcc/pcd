@@ -106,10 +106,10 @@ typedef enum
  */
 typedef struct
 {
-    u_int32_t  magic;
-    u_int32_t  size;
+    uint32_t  magic;
+    uint32_t  size;
     int32_t   context;
-    u_int8_t   data[0];
+    uint8_t   data[0];
 
 } IPC_message_t;
 
@@ -127,20 +127,20 @@ enum { IPC_NO_OWNER = ~0U };
  */
 #define IPC_PRINTF_ERROR_STDERR( format, args... )		fprintf( stderr, "ipc: Error: " format ".\n", ## args )
 
-typedef u_int32_t IPC_context_t;
+typedef uint32_t IPC_context_t;
 
 /*!\fn IPC_init
  * \brief Initialize the IPC module. To be used in case it requires general init.
  * \param[in] 		flags: Special handling flags
  * \return			IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_init( u_int32_t flags );
+IPC_status_e IPC_init( uint32_t flags );
 
 /*!\fn IPC_deinit
  * \brief Deinitialize the IPC module. IPC will be unavailable after this function call.
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_deinit( u_int32_t flags );
+IPC_status_e IPC_deinit( uint32_t flags );
 
 /*!\fn IPC_start
  * \brief Start a communication channel.
@@ -149,7 +149,7 @@ IPC_status_e IPC_deinit( u_int32_t flags );
  * \param[out]      myContext: Context handle, to be used with the IPC API
  * \return			IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_start( char *myName, IPC_context_t *myContext, u_int32_t flags );
+IPC_status_e IPC_start( char *myName, IPC_context_t *myContext, uint32_t flags );
 
 /*!\fn IPC_stop
  * \brief Stop a communication channel, free all the resources.
@@ -164,7 +164,7 @@ IPC_status_e IPC_stop( IPC_context_t myContext );
  * \param[in] 	    size: Buffer size
  * \return			Pointer to an IPC message - Success, NULL - Error
  */
-IPC_message_t *IPC_alloc_msg( IPC_context_t myContext, u_int32_t size );
+IPC_message_t *IPC_alloc_msg( IPC_context_t myContext, uint32_t size );
 
 /*!\fn IPC_get_msg
  * \brief Get a pointer to the data in the message body. Required in case the IPC module encapsulates infromation in the message body.
@@ -234,7 +234,7 @@ IPC_status_e IPC_cleanup_proc( pid_t pid );
  * \param[in] 	    owner: Owner's ID, a constant value which *always* represents this context
  * \return			IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_set_owner( IPC_context_t myContext, u_int32_t owner );
+IPC_status_e IPC_set_owner( IPC_context_t myContext, uint32_t owner );
 
 /*!\fn IPC_get_context_by_owner
  * \brief Get an index value of an IPC resource (optional).
@@ -242,7 +242,7 @@ IPC_status_e IPC_set_owner( IPC_context_t myContext, u_int32_t owner );
  * \param[out] 	    destContext: Destination context which is identified as the owner
  * \return			IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, u_int32_t owner );
+IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, uint32_t owner );
 
 /*!\fn IPC_general_func
  * \brief Optional general function for any extension required.
@@ -251,7 +251,7 @@ IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, u_int32_t own
  * \param[in,out] 	data: Some data
  * \return			IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_general_func( u_int32_t value, void *data, u_int32_t dataSize );
+IPC_status_e IPC_general_func( uint32_t value, void *data, uint32_t dataSize );
 
 #endif /*__IPC_H__*/
 

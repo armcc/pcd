@@ -143,8 +143,8 @@ typedef struct
 {
     int32_t   fd;
     char    path[ IPC_UNIX_PATH_MAX ];
-    u_int32_t  flags;
-    u_int32_t  owner;
+    uint32_t  flags;
+    uint32_t  owner;
     pid_t   pid;
 
 } IPC_client_t;
@@ -189,7 +189,7 @@ static IPC_info_t info = { 0, 0, NULL };
  * \brief Initialize the IPC module. To be used in case it requires general init.
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_init( u_int32_t flags )
+IPC_status_e IPC_init( uint32_t flags )
 {
     int32_t newdb = 0;
 
@@ -249,9 +249,9 @@ IPC_status_e IPC_init( u_int32_t flags )
  * \brief Deinitialize the IPC module. IPC will be unavailable after this function call.
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_deinit( u_int32_t flags )
+IPC_status_e IPC_deinit( uint32_t flags )
 {
-    u_int32_t i;
+    uint32_t i;
     
     ENTER_FUNC;
 
@@ -301,7 +301,7 @@ IPC_status_e IPC_deinit( u_int32_t flags )
  * \brief Start a communication channel.
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_start( char *myName, IPC_context_t *myContext, u_int32_t flags )
+IPC_status_e IPC_start( char *myName, IPC_context_t *myContext, uint32_t flags )
 {
     struct sockaddr_un sun;
     int32_t fd;
@@ -432,7 +432,7 @@ IPC_status_e IPC_stop( IPC_context_t myContext )
  * \brief Allocate memory for a message. Note that this pointer is not usable, it is a pointer for
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_message_t *IPC_alloc_msg( IPC_context_t myContext, u_int32_t size )
+IPC_message_t *IPC_alloc_msg( IPC_context_t myContext, uint32_t size )
 {
     IPC_message_t *msg;
     int32_t i = (int32_t)myContext;
@@ -736,7 +736,7 @@ IPC_status_e IPC_cleanup_proc( pid_t pid )
  * \brief Set ownership (index value) on an IPC resource (optional).
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_set_owner( IPC_context_t myContext, u_int32_t owner )
+IPC_status_e IPC_set_owner( IPC_context_t myContext, uint32_t owner )
 {
     int32_t i = (int32_t)myContext;
 
@@ -758,7 +758,7 @@ IPC_status_e IPC_set_owner( IPC_context_t myContext, u_int32_t owner )
  * \brief Get an index value of an IPC resource (optional).
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, u_int32_t owner )
+IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, uint32_t owner )
 {
     int32_t i = 0;
 
@@ -793,7 +793,7 @@ IPC_status_e IPC_get_context_by_owner( IPC_context_t *destContext, u_int32_t own
  * \brief Optional general function for any extension required.
  * \return          IPC_STATUS_OK - Success, IPC_STATUS_NOK - Error
  */
-IPC_status_e IPC_general_func( u_int32_t value, void *data, u_int32_t dataSize )
+IPC_status_e IPC_general_func( uint32_t value, void *data, uint32_t dataSize )
 {
     ENTER_FUNC;
     return IPC_STATUS_OK;

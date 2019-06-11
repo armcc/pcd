@@ -69,7 +69,7 @@ bool_t verboseOutput = False;
 bool_t debugMode = False;
 
 /* PCD Timer tick in ms */
-u_int32_t PCD_TIMER_TICK = PCD_TIMER_TICK_DEFAULT;
+uint32_t PCD_TIMER_TICK = PCD_TIMER_TICK_DEFAULT;
 
 /**************************************************************************/
 /*      IMPLEMENTATION                                                    */
@@ -276,8 +276,8 @@ void PCD_main_init( void )
 
 void PCD_main_loop( void )
 {
-    u_int32_t pcdTimerTick;
-    u_int32_t tickCounter = PCD_PROCESS_TICK; /* Init tickCounter to perform an iteration */
+    uint32_t pcdTimerTick;
+    uint32_t tickCounter = PCD_PROCESS_TICK; /* Init tickCounter to perform an iteration */
 
     /* Setup PCD tick */
     pcdTimerTick = PCD_TIMER_TICK * 1000; /* Convert to uSeconds */

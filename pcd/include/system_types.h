@@ -43,7 +43,7 @@
 #ifndef _SYSTEM_TYPES_H_
 #define _SYSTEM_TYPES_H_
 
-#include <sys/types.h>
+#include <stdint.h>
 
 #if !defined( False ) && !defined( True )
 #define False 	(0)
@@ -52,7 +52,7 @@
 
 #ifndef bool_t
 /* Boolean system type */
-typedef u_int32_t bool_t;
+typedef uint32_t bool_t;
 
 #endif
 

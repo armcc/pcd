@@ -72,7 +72,7 @@
 typedef struct exception_t
 {
     /* Magic number */
-    u_int32_t magic;
+    uint32_t magic;
 
     char process_name[ PCD_EXCEPTION_MAX_PROCESS_NAME ];
 
@@ -81,19 +81,19 @@ typedef struct exception_t
     pid_t process_id;
 
     /* The number of the exception signal */
-    u_int32_t signal_number;
+    uint32_t signal_number;
 
     /* The signal code from siginfo_t. Provides exception reason */
-    u_int32_t signal_code;
+    uint32_t signal_code;
 
     /* Fault address, if relevant */
     void *fault_address;
 
     /* The last error as reported via siginfo_t. Seems to be always 0 */
-    u_int32_t signal_errno;
+    uint32_t signal_errno;
 
     /* The last error in errno when the exception handler got called. */
-    u_int32_t handler_errno;
+    uint32_t handler_errno;
 
 #ifdef CONFIG_PCD_PLATFORM_ARM /* ARM registers */
     struct sigcontext regs;

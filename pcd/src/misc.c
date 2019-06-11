@@ -42,7 +42,7 @@
 #include "pcd.h"
 
 static pid_t netRxPid = 0;
-static u_int32_t netRxPriority = 0;
+static uint32_t netRxPriority = 0;
 
 PCD_status_e PCD_misc_reduce_net_rx_priority( int32_t priority )
 {

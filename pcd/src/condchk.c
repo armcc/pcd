@@ -120,7 +120,7 @@ PCD_status_e PCD_start_cond_check_PNAME( rule_t *rule )
 PCD_status_e PCD_start_cond_check_RULE_COMPLETED( rule_t *rule )
 {
     rule_t *checkRule;
-    u_int32_t i = 0;
+    uint32_t i = 0;
 
     while ( i < PCD_START_COND_MAX_IDS )
     {
@@ -314,7 +314,7 @@ PCD_status_e PCD_end_cond_check_PROCESS_READY( rule_t *rule )
 
 PCD_status_e PCD_end_cond_check_WAIT( rule_t *rule )
 {
-    u_int32_t *delay = &rule->endCondition.delay[0];
+    uint32_t *delay = &rule->endCondition.delay[0];
 
     /* Reduce time tick and check if time has expired */
     if ( *delay < PCD_TIMER_TICK )

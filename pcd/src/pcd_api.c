@@ -149,7 +149,7 @@ PCD_status_e PCD_api_deinit( void )
 PCD_status_e PCD_api_check_messages( void )
 {
     IPC_message_t *msg;
-    u_int32_t budget = 5;
+    uint32_t budget = 5;
 
     /* Check for incoming messages */
     while ( budget-- && IPC_wait_msg( pcdContext, &msg, IPC_TIMEOUT_IMMEDIATE ) == 0 )

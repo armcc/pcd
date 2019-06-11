@@ -77,7 +77,7 @@ typedef struct pcdApiMessage_t
         int32_t       priority;
     };
     ruleId_t    ruleId;
-    u_int32_t      msgId;
+    uint32_t      msgId;
     char        params[ CONFIG_PCD_MAX_PARAM_SIZE ];   /* Optional parameters */
 
 } pcdApiMessage_t;
@@ -87,7 +87,7 @@ typedef struct pcdApiMessage_t
  */
 typedef struct pcdApiReplyMessage_t
 {
-    u_int32_t      msgId;
+    uint32_t      msgId;
     union
     {
         pcdApiRuleState_e   ruleState;

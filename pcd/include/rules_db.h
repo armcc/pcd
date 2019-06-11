@@ -66,7 +66,7 @@ typedef struct rule_t
     ruleId_t            ruleId;
     startCond_t         startCondition;
     endCond_t           endCondition;
-    u_int32_t              timeout;
+    uint32_t              timeout;
     char                *command;
     char                *params;
     char                *optionalParams;

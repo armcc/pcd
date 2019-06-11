@@ -65,8 +65,8 @@ typedef struct configKeywordHandler_t
 {
     char      *name;
     int32_t     (*handler)(char *line);
-    u_int32_t    parse_flag;        /* set at run time. */
-    u_int32_t    mandatory_flag;    /* indicate if this is a mandatory field. */
+    uint32_t    parse_flag;        /* set at run time. */
+    uint32_t    mandatory_flag;    /* indicate if this is a mandatory field. */
 
 } configKeywordHandler_t;
 
@@ -149,11 +149,11 @@ static const char *failureActionKeywords[] =
  **************************************************************************/
 static rule_t     rule;
 static int32_t      fileVersion = -1;
-static u_int32_t     readParseStatus = 0;   /* Did we read all the neccessary fields to populate rule? */
-static u_int32_t     writableParseStatus = 0;   /* Must have fields to populate the rule. */
-static u_int32_t     lineNumber = 0;   /* The line number of input file which we are reading. */
-static u_int32_t     verbose = 0;    /* Show rules after parsing */
-static u_int32_t     totalRuleRecords = 0;   /* The number of records written into the database. */
+static uint32_t     readParseStatus = 0;   /* Did we read all the neccessary fields to populate rule? */
+static uint32_t     writableParseStatus = 0;   /* Must have fields to populate the rule. */
+static uint32_t     lineNumber = 0;   /* The line number of input file which we are reading. */
+static uint32_t     verbose = 0;    /* Show rules after parsing */
+static uint32_t     totalRuleRecords = 0;   /* The number of records written into the database. */
 
 static void PCD_parser_dump_config( rule_t *rule );
 
@@ -176,7 +176,7 @@ static void PCD_parser_dump_config( rule_t *rule )
     if ( rule->timeout == ~0 )
         printf( "None\n" );
     else
-        printf( "%dms\n", (u_int32_t)rule->timeout);
+        printf( "%dms\n", (uint32_t)rule->timeout);
     printf( "Scheduling: %s (%d)\n", rule->sched.type == PCD_SCHED_TYPE_FIFO ? "FIFO" : "NICE", rule->sched.niceSched );
     printf( "Daemon: %s\n", rule->daemon ? "YES":"NO"  );
     printf( "Active: %s\n", rule->ruleState == PCD_RULE_ACTIVE ? "YES":"NO"  );
@@ -469,7 +469,7 @@ static int32_t PCD_parser_init_kwHandlersList(void)
 static int32_t PCD_parser_parse_rule_id( ruleId_t *ruleId, char *line )
 {
     char *token1, *token2;
-    u_int32_t cp;
+    uint32_t cp;
 
     PCD_FUNC_ENTER_PRINT
 
@@ -528,8 +528,8 @@ static int32_t PCD_parser_handle_ACTIVE( char *line )
 
 static int32_t PCD_parser_handle_INCLUDE( char *line )
 {
-    u_int32_t    local_read_parse_status = readParseStatus;   /* Did we read all the neccessary fields to populate rule? */
-    u_int32_t    local_line_num = lineNumber;   /* The line number of input file which we are reading. */
+    uint32_t    local_read_parse_status = readParseStatus;   /* Did we read all the neccessary fields to populate rule? */
+    uint32_t    local_line_num = lineNumber;   /* The line number of input file which we are reading. */
     rule_t    local_rule = rule;
 
     PCD_FUNC_ENTER_PRINT
@@ -591,7 +591,7 @@ static int32_t PCD_parser_handle_RULE( char *line )
 static int32_t PCD_parser_handle_START_COND( char *line )
 {
     char *token1, *token2;
-    u_int32_t i = 0;
+    uint32_t i = 0;
 
     PCD_FUNC_ENTER_PRINT
 
@@ -630,7 +630,7 @@ static int32_t PCD_parser_handle_START_COND( char *line )
     /* Special care here because we don't need token2, but we find tokens in a loop */
     if ( i == PCD_START_COND_KEYWORD_RULE_COMPLETED )
     {
-        u_int32_t j = 0;
+        uint32_t j = 0;
         char *token;
         char tempToken[ PCD_RULEID_MAX_GROUP_NAME_SIZE+PCD_RULEID_MAX_RULE_NAME_SIZE+2 ];
 
@@ -861,7 +861,7 @@ static int32_t PCD_parser_handle_USER( char *line )
 static int32_t PCD_parser_handle_END_COND( char *line )
 {
     char *token1, *token2;
-    u_int32_t i = 0;
+    uint32_t i = 0;
 
     PCD_FUNC_ENTER_PRINT
 
@@ -954,7 +954,7 @@ static int32_t PCD_parser_handle_END_COND_TIMEOUT( char *line )
 static int32_t PCD_parser_handle_FAILURE_ACTION( char *line )
 {
     char *token1, *token2;
-    u_int32_t i = 0;
+    uint32_t i = 0;
 
     PCD_FUNC_ENTER_PRINT
 

@@ -58,7 +58,7 @@ PCD_status_e PCD_output_header_create_file( const char *headerFilename, void **h
 {
     char header[ MAX_FILENAME_LEN ];
     char *ptr, *last;
-    u_int32_t i;
+    uint32_t i;
     FILE *myHeaderHandle;
 
     myHeaderHandle = fopen( headerFilename, "w" );
@@ -127,7 +127,7 @@ PCD_status_e PCD_output_header_create_file( const char *headerFilename, void **h
  */
 PCD_status_e PCD_output_header_close_file( const char *headerFilename, const void *headerHandle )
 {
-    u_int32_t i = 0;
+    uint32_t i = 0;
     FILE *myHeaderHandle;
 
     if ( !headerHandle )
@@ -168,7 +168,7 @@ PCD_status_e PCD_output_header_close_file( const char *headerFilename, const voi
  */
 PCD_status_e PCD_output_header_update_file( rule_t *newrule, const void *headerHandle )
 {
-    u_int32_t i = 0;
+    uint32_t i = 0;
     bool_t found = False;
     FILE *myHeaderHandle;
 

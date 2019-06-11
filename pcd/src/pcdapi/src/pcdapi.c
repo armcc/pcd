@@ -101,7 +101,7 @@ static PCD_status_e PCD_api_malloc_and_send( const struct ruleId_t *ruleId, pcdA
     IPC_timeout_e timeout = PCD_API_REPLY_TIMEOUT;
     pcdApiMessage_t *data;
     PCD_status_e retval = PCD_STATUS_OK;
-    u_int32_t msgId;
+    uint32_t msgId;
     char pcdClient[ 32 ];
 
     if ( !pcdApiInitDone )
@@ -139,7 +139,7 @@ static PCD_status_e PCD_api_malloc_and_send( const struct ruleId_t *ruleId, pcdA
     data = IPC_get_msg( msg );
 
     /* Generate a message ID using an uninitialized data[0] */
-    msgId = *(u_int32_t *)( data ) - (u_int32_t)(pcdTmpCtx);
+    msgId = *(uint32_t *)( data ) - (uint32_t)(pcdTmpCtx);
 
     /* Clear data */
     memset( data, 0, sizeof( pcdApiMessage_t ) );
@@ -546,7 +546,7 @@ static void PCD_exception_default_handler(int32_t signo, siginfo_t *info, void *
 
     if ( fd1 > 0 )
     {
-        u_int8_t buf[ 512 ];
+        uint8_t buf[ 512 ];
         int32_t readBytes = 0;
 
         /* Create a temporary file which will be available after the process is dead */

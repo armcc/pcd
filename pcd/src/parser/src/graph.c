@@ -155,7 +155,7 @@ PCD_status_e PCD_graph_update_file( const rule_t *newrule, const void *graphHand
 
         if ( newrule->startCondition.type == PCD_START_COND_KEYWORD_RULE_COMPLETED )
         {
-            u_int32_t i = 0;
+            uint32_t i = 0;
 
             while ( i < PCD_START_COND_MAX_IDS )
             {

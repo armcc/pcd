@@ -162,7 +162,7 @@ typedef struct startCond_t
         char        filename[ PCD_COND_MAX_SIZE ];
         ruleCache_t ruleCompleted[ PCD_START_COND_MAX_IDS ];
         char        netDevice[ IF_NAMESIZE ];
-        u_int32_t   ipcOwner;
+        uint32_t   ipcOwner;
         envVar_t    envVar;
     };
 
@@ -177,11 +177,11 @@ typedef struct endCond_t
     union
     {
     char    filename[ PCD_COND_MAX_SIZE ];
-    u_int32_t  delay[2];
+    uint32_t  delay[2];
     char    netDevice[ IF_NAMESIZE ];
-    u_int32_t  ipcOwner;
-    u_int32_t  exitStatus;
-    u_int32_t  signal;
+    uint32_t  ipcOwner;
+    uint32_t  exitStatus;
+    uint32_t  signal;
     bool_t    processReady;
     };
 

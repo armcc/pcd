@@ -205,7 +205,7 @@ void PCD_errlog_log( char *buffer, bool_t timeStamp )
 
         if ( ( timeBuf = ctime( &time.tv_sec ) ) != NULL )
         {
-            u_int32_t len = strlen( timeBuf );
+            uint32_t len = strlen( timeBuf );
 
             timeBuf[ len - 1 ] = ' ';
             if( write( fd, timeBuf, len ) <= 0 )

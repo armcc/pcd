@@ -203,7 +203,7 @@ void PCD_main_parse_params( int32_t argc, char *argv[] )
 
 int main( int32_t argc, char *argv[] )
 {
-    u_int32_t ret = 0;
+    uint32_t ret = 0;
 
     PCD_main_parse_params( argc, argv );
 
