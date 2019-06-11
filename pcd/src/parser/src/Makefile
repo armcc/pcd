@@ -27,7 +27,7 @@ HOST_LDFLAGS =
 # includes
 HOST_CFLAGS += -I$(PCD_ROOT)/pcd/src/parser/include -I$(PCD_ROOT)/pcd/include
 
-obj-y := $(patsubst %.c,%.o,$(shell ls *.c 2> /dev/null))
+obj-y := $(patsubst %.c,%.o,$(shell ls *.c 2> /dev/null)) parser.o
 TARGET = pcdparser
 
 all: $(TARGET)
@@ -52,6 +52,10 @@ ifneq ($(CONFIG_PCD_INSTALL_DIR_HOST),"")
 endif
 
 %.o: %.c
+	@echo "  HOST_CC [C]	$@"
+	$(HOST_CC) $(HOST_CFLAGS) -c $(CURDIR)/$< -o $@
+
+parser.o: ../../parser.c
 	@echo "  HOST_CC [C]	$@"
 	$(HOST_CC) $(HOST_CFLAGS) -c $(CURDIR)/$< -o $@
 
