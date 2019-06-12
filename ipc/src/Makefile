@@ -22,7 +22,7 @@
 
 CC := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))gcc
 AR := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))ar
-CFLAGS += -MMD -Wall -fomit-frame-pointer -fPIC -g
+CFLAGS += -MMD -Wall -fPIC -g
 LDFLAGS += -shared
 
 # includes

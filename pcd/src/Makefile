@@ -21,7 +21,7 @@
 -include $(PCD_ROOT)/.config
 
 CC := $(patsubst "%",%,$(CONFIG_PCD_CROSS_COMPILER_PREFIX))gcc
-CFLAGS += -MMD -Wall -fomit-frame-pointer -g
+CFLAGS += -MMD -Wall -g
 
 # includes
 CFLAGS += -I$(PCD_ROOT)/pcd/include -I$(PCD_ROOT)/pcd/src/pcdapi/include -I$(PCD_ROOT)/ipc/include
