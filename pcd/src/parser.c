@@ -590,6 +590,7 @@ static int32_t PCD_parser_handle_RULE( char *line )
 
 static int32_t PCD_parser_handle_START_COND( char *line )
 {
+    size_t len;
     char *token1, *token2;
     uint32_t i = 0;
 
@@ -640,8 +641,11 @@ static int32_t PCD_parser_handle_START_COND( char *line )
         /* Parse all rules */
         while ( ( j < PCD_START_COND_MAX_IDS ) && ( ( token = strtok(NULL, PCD_PARSER_DELIMITERS) ) != NULL ) )
         {
-            memset( tempToken, 0, sizeof( tempToken ) );
-            strncpy( tempToken, token, sizeof( tempToken ) - 1 );
+            len = strlen(token);
+            if (len >= sizeof(tempToken))
+                len = sizeof(tempToken) - 1;
+            memcpy( tempToken, token, len );
+            tempToken[len] = 0;
 
             if ( PCD_parser_parse_rule_id( &rule.startCondition.ruleCompleted[ j ].ruleId, tempToken ) != PCD_STATUS_OK )
             {
@@ -671,15 +675,21 @@ static int32_t PCD_parser_handle_START_COND( char *line )
         return -1;
     }
 
+    len = strlen(token2);
+
     switch ( i )
     {
         case PCD_START_COND_KEYWORD_FILE:
-			memset( rule.startCondition.filename, 0, sizeof( rule.startCondition.filename ) );
-            strncpy( rule.startCondition.filename, token2, PCD_COND_MAX_SIZE - 1 );
+            if (len >= sizeof(rule.startCondition.filename))
+                len = sizeof(rule.startCondition.filename) - 1;
+            memcpy( rule.startCondition.filename, token2, len );
+            rule.startCondition.filename[len] = 0;
             break;
         case PCD_START_COND_KEYWORD_NETDEVICE:
-		    memset( rule.startCondition.netDevice, 0, sizeof( rule.startCondition.netDevice ) );
-            strncpy( rule.startCondition.netDevice, token2, IF_NAMESIZE - 1 );
+            if (len >= sizeof(rule.startCondition.netDevice))
+                len = sizeof(rule.startCondition.netDevice) - 1;
+            memcpy( rule.startCondition.netDevice, token2, len );
+            rule.startCondition.netDevice[len] = 0;
             break;
         case PCD_START_COND_KEYWORD_IPC_OWNER:
             rule.startCondition.ipcOwner = atoi( token2 );
@@ -695,8 +705,16 @@ static int32_t PCD_parser_handle_START_COND( char *line )
                     return -1;
                 }
 
-                strncpy( rule.startCondition.envVar.envVarName, token2, PCD_COND_MAX_SIZE );
-                strncpy( rule.startCondition.envVar.envVarValue, token3, PCD_COND_MAX_SIZE );
+                if (len >= sizeof(rule.startCondition.envVar.envVarName))
+                    len = sizeof(rule.startCondition.envVar.envVarName) - 1;
+                memcpy( rule.startCondition.envVar.envVarName, token2, len );
+                rule.startCondition.envVar.envVarName[len] = 0;
+
+                len = strlen(token3);
+                if (len >= sizeof(rule.startCondition.envVar.envVarValue))
+                    len = sizeof(rule.startCondition.envVar.envVarValue) - 1;
+                memcpy( rule.startCondition.envVar.envVarValue, token3, len );
+                rule.startCondition.envVar.envVarValue[len] = 0;
             }
             break;
         default:
@@ -860,6 +878,7 @@ static int32_t PCD_parser_handle_USER( char *line )
 
 static int32_t PCD_parser_handle_END_COND( char *line )
 {
+    size_t len;
     char *token1, *token2;
     uint32_t i = 0;
 
@@ -904,15 +923,21 @@ static int32_t PCD_parser_handle_END_COND( char *line )
         return -1;
     }
 
+    len = strlen(token2);
+
     switch ( i )
     {
         case PCD_END_COND_KEYWORD_FILE:
-            memset( rule.endCondition.filename, 0, sizeof( rule.endCondition.filename ) );
-			strncpy( rule.endCondition.filename, token2, PCD_COND_MAX_SIZE - 1 );
+            if (len >= sizeof(rule.endCondition.filename))
+                len = sizeof(rule.endCondition.filename) - 1;
+            memcpy( rule.endCondition.filename, token2, len );
+            rule.endCondition.filename[len] = 0;
             break;
         case PCD_END_COND_KEYWORD_NETDEVICE:
-		    memset( rule.endCondition.netDevice, 0, sizeof( rule.endCondition.netDevice ) );
-            strncpy( rule.endCondition.netDevice, token2, IF_NAMESIZE - 1 );
+            if (len >= sizeof(rule.endCondition.netDevice))
+                len = sizeof(rule.endCondition.netDevice) - 1;
+            memcpy( rule.endCondition.netDevice, token2, len );
+            rule.endCondition.netDevice[len] = 0;
             break;
         case PCD_END_COND_KEYWORD_IPC_OWNER:
             rule.endCondition.ipcOwner = atoi( token2 );
