@@ -48,7 +48,7 @@ liblxdialog.a: $(liblxdialog-objs)
 	$(HOST_AR) rs $@ $^ 
 
 %.o: %.c
-	$(HOST_CC) $(HOST_EXTRACFLAGS) -fPIC -c $< 
+	$(HOST_CC) -Wno-unused-but-set-variable -Wno-unused-result $(HOST_EXTRACFLAGS) -fPIC -c $< 
 
 clean:
 	rm -f $(hostprogs-y) $(liblxdialog-objs) $(lxdialog-objs) liblxdialog.a

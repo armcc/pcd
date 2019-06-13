@@ -1,7 +1,7 @@
 VERSION=1.4
 HOST_CC=gcc
 HOST_CXX=g++
-HOST_CFLAGS=-O2 -Wall -g -fPIC
+HOST_CFLAGS=-O2 -Wall -Wno-unused-but-set-variable -Wno-unused-result -Wno-unused-function -g -fPIC
 HOST_LDFLAGS=
 LEX=flex
 LFLAGS=-L
