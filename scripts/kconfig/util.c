@@ -166,7 +166,7 @@ char * TI_unselect_read(char *filename)
     if ((line[0] == '#') || (line[0] == '\n')) /* skip comment and newlines */
       continue;
     if (line[read-1] == '\n') 
-      line[--read] = (char)NULL;
+      line[--read] = 0;
     if (strlen(symstr) + read > symstrsz) {
       symstrsz += 1000;
       if((symstr = realloc(symstr, symstrsz)) == NULL) {
